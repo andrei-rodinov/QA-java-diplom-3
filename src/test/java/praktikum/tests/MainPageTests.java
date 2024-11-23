@@ -18,24 +18,15 @@ import static org.hamcrest.Matchers.equalTo;
 
 
     @DisplayName("Проверка конструктора (главной страницы)")
-    @RunWith(Parameterized.class)
     public class MainPageTests {
         private WebDriver webDriver;
-        private String browserName;
         private MainPage mainPage;
-        @Parameterized.Parameters(name="Browser {0}")
-        public static Object[][] initParams() {
-            return new Object[][] {
-                    {"chrome"},
-                    {"yandex"}
-            };
-        }
-        public MainPageTests(String browserName) {
-            this.browserName = browserName;
-        }
+
+
         @Before
         @Step("Запуск браузера")
         public void startUp() {
+            String browserName = System.getProperty("browser", "chrome");
             webDriver = WebDriverFactory.createDriver(browserName);
             webDriver.get(ServerURLs.MAIN_PAGE_URL);
             mainPage = new MainPage(webDriver);
@@ -50,7 +41,7 @@ import static org.hamcrest.Matchers.equalTo;
     @Step("Нажатие на вкладку Булочки")
     @DisplayName("Проверка работы вкладки Булочки в разделе с ингредиентами")
     public void checkScrollToBunsIsSuccess() {
-        Allure.parameter("Браузер", browserName);
+        Allure.parameter("Браузер", System.getProperty("browser", "chrome"));
 
         mainPage.clickFillingsButton();
         mainPage.clickBunsButton();
@@ -67,7 +58,7 @@ import static org.hamcrest.Matchers.equalTo;
         @Step("Нажатие на вкладку Соусы")
         @DisplayName("Проверка работы вкладки Соусы в разделе с ингредиентами")
         public void checkScrollToSaucesIsSuccess() {
-            Allure.parameter("Браузер", browserName);
+            Allure.parameter("Браузер", System.getProperty("browser", "chrome"));
 
             mainPage.clickSaucesButton();
             mainPage.scrollToElementAndWait(mainPage.getSaucesTypes());
@@ -83,7 +74,7 @@ import static org.hamcrest.Matchers.equalTo;
     @Step("Нажатие на вкладку Начинки")
     @DisplayName("Проверка работы вкладки Начинки в разделе с ингредиентами")
     public void checkScrollToFillingsIsSuccess() {
-        Allure.parameter("Браузер", browserName);
+        Allure.parameter("Браузер", System.getProperty("browser", "chrome"));
 
         mainPage.clickFillingsButton();
         mainPage.scrollToElementAndWait(mainPage.getFillingsTypes());

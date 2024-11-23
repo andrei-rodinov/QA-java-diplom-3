@@ -21,8 +21,13 @@ public class WebDriverFactory {
             }
 
             case "yandex": {
+                String yandexBinaryPath = System.getenv("YANDEX_BROWSER_PATH");
+                if (yandexBinaryPath == null || yandexBinaryPath.isEmpty()) {
+                    throw new IllegalArgumentException("Переменная окружения YANDEX_BROWSER_PATH не задана.");
+                }
+
                 ChromeOptions options = new ChromeOptions();
-                options.setBinary("/Applications/Yandex.app/Contents/MacOS/Yandex");
+                options.setBinary(yandexBinaryPath);
                 options.addArguments(
                         "--no-sandbox",
                         "--headless",
